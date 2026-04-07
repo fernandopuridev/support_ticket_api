@@ -4,8 +4,7 @@ Rails.application.routes.draw do
     path_names: {
       sign_in: "sign_in",
       sign_out: "sign_out",
-      registration: "sign_up",
-      password: "password"
+      registration: "sign_up"
     },
     controllers: {
       sessions: "api/v1/auth/sessions",

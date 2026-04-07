@@ -20,6 +20,4 @@ class Ticket < ApplicationRecord
   validates :title, presence: true
   validates :description, presence: true
   validates :category, presence: true
-
-  default_scope { order(created_at: :desc) }
 end

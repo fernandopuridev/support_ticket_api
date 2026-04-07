@@ -1,24 +1,62 @@
-# README
+# Support Tickets API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+API Ruby on Rails para o sistema de chamados de suporte técnico, listagem de tickets, tela de detalhe e mensagens entre cliente e suporte. O projeto foi pensado para facilitar a comunicação entre clientes e atendentes para a resolução de dúvidas e problemas em viagens da Amazon Trips 
 
-Things you may want to cover:
+## Stack
 
-* Ruby version
+- Ruby on Rails API
+- Devise + JWT
+- PostgreSQL
 
-* System dependencies
+## Funcionalidades
 
-* Configuration
+- cadastro e login de usuários
+- roles `user` e `admin`
+- criação e listagem de tickets
+- atualização de status por admin
+- mensagens entre user e admin via ticket
 
-* Database creation
+## Rotas principais
 
-* Database initialization
+- `POST /auth/sign_up`
+- `POST /auth/sign_in`
+- `DELETE /auth/sign_out`
+- `GET /api/v1/tickets`
+- `GET /api/v1/tickets/:id`
+- `POST /api/v1/tickets`
+- `PATCH /api/v1/tickets/:id`
+- `GET /api/v1/tickets/:ticket_id/messages`
+- `POST /api/v1/tickets/:ticket_id/messages`
 
-* How to run the test suite
+## Setup
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+bundle install
+bin/rails db:create db:migrate
+bin/rails db:seed
+bin/rails s
+```
 
-* Deployment instructions
+## User e Admin
 
-* ...
+Ao rodar o seeds, irá criar o Admin:
+  email: "admin@email.com",
+  password: "123456",
+
+E user:
+  email: "joao@email.com",
+  password: "123456",
+
+Para criar outro Admin entre no console:
+```bash
+bin/rails console
+```
+E digite:
+```rb
+admin = User.create!(
+  name: "Admin 2",
+  email: "admin2@email.com",
+  password: "123456",
+  role: :admin
+)
+```
