@@ -320,6 +320,7 @@ Devise.setup do |config|
     jwt.revocation_requests = [["DELETE", %r{^/auth/sign_out$}]]
     jwt.expiration_time = 24.hours.to_i
   end
+  config.navigational_formats = []
 
   Rails.application.config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
 end

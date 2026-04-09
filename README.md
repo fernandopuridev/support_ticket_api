@@ -30,8 +30,27 @@ API Ruby on Rails para o sistema de chamados de suporte técnico, listagem de ti
 
 ## Setup
 
+1. Instale as dependências:
+
 ```bash
 bundle install
+```
+
+2. Crie o arquivo `.env` na raiz do backend e gere a chave JWT:
+
+```bash
+bundle exec rails secret
+```
+
+Adicione o valor gerado ao `.env`:
+
+```env
+DEVISE_JWT_SECRET_KEY=chave_gerada
+```
+
+3. Prepare o banco e rode a aplicação:
+
+```bash
 bin/rails db:create db:migrate
 bin/rails db:seed
 bin/rails s
