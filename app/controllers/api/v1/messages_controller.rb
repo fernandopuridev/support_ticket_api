@@ -1,17 +1,16 @@
 module Api
   module V1
     class MessagesController < ApplicationController
+      before_action :set_ticket
+      before_action :require_owner_or_admin!
+
       def index
-        ticket = Ticket.find(params[:ticket_id])
-        require_owner_or_admin!(ticket)
-        messages = ticket.messages.includes(:user).order(:created_at)
+        messages = @ticket.messages.includes(:user).order(:created_at)
         render json: messages.map { |m| MessagePresenter.render(m) }
       end
 
       def create
-        ticket = Ticket.find(params[:ticket_id])
-        require_owner_or_admin!(ticket)
-        message = ticket.messages.new(
+        message = @ticket.messages.new(
           body: params.dig(:message, :body),
           user: current_user
         )
@@ -19,8 +18,14 @@ module Api
         if message.save
           render json: MessagePresenter.render(message), status: :created
         else
-          render json: { errors: message.errors.full_messages }, status: :unprocessable_entity
+          render_unprocessable(message.errors.full_messages)
         end
+      end
+
+      private
+
+      def set_ticket
+        @ticket = Ticket.find(params[:ticket_id])
       end
     end
   end

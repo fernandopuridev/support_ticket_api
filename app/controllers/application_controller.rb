@@ -8,10 +8,15 @@ class ApplicationController < ActionController::API
     render json: { error: "Acesso não autorizado" }, status: :forbidden unless current_user.admin?
   end
 
-  def require_owner_or_admin!(ticket)
+  def require_owner_or_admin!
     return if current_user.admin?
-    return if ticket.user == current_user
+    return if @ticket.user == current_user
+
     render json: { error: "Acesso não autorizado" }, status: :forbidden
+  end
+
+  def render_unprocessable(errors)
+    render json: { errors: errors }, status: :unprocessable_entity
   end
 
   def configure_permitted_parameters
